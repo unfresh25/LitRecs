@@ -1,0 +1,42 @@
+project:
+  type: website
+
+website:
+  title: "LitRecs"
+  page-navigation: true
+  reader-mode: true  
+  favicon: "src/images/LitRecs.png"
+  navbar:
+    logo: "src/images/LitRecs.png"
+    logo-alt: "LitRecs Logo"
+    left:
+      - href: index.qmd
+        text: Home
+      - href: getting-started.qmd
+        text: Get Started
+    right:
+      - icon: github
+        href: https://github.com/unfresh25/LitRecs/tree/quarto-notebook
+  page-footer:
+    border: true
+    left: "Made by Jorge Borja, MsC."
+    right: 
+      - icon: linkedin
+        href: https://www.linkedin.com/in/jorgeborjas25/
+      - icon: github
+        href: https://github.com/unfresh25/
+
+format:
+  html:
+    theme: cyborg
+    css: styles.css
+    toc: true
+    code-copy: true
+    code-overflow: wrap
+    code-tools: true
+    smooth-scroll: true
+    lang: en
+    df-print: paged
+    mainfont: "Roboto"
+
+jupyter: litrecs_env

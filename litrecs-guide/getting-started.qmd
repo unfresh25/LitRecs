@@ -1,0 +1,15 @@
+---
+title: "Get Started"
+---
+
+# How to get started
+
+You can get the application's code by cloning the repository to your computer as follows:
+
+1. **Clone the Repository:** Open your terminal and clone the repository using `git clone https://github.com/unfresh25/LitRecs.git`.
+2. **Install Dependencies:** Navigate to the project directory and install the dependencies listed in the requirements.txt file by running `cd LitRecs && pip install -r requirements.txt` in the terminal.
+3. **Explore and Develop:** Review the files using your preferred code editor and start building your own recommendation system.
+
+# Contributions
+
+To contribute, you need to **request access** to the database to obtain the necessary information about the books. Apart from that, we welcome contributions from the community. Any creativity, development, or bug fixes are greatly appreciated. Therefore, don't hesitate to open an issue or send a PR once you've gained access.

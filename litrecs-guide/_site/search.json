@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "LitRecs (Literature Recommendations)",
+    "section": "",
+    "text": "Welcome to LitRecs, an app designed for book lovers who want to keep track of their reading and discover new works that match their tastes. Inspired by platforms like Goodreads, LitRecs offers a comprehensive and personalized experience for managing your personal library and exploring new recommendations."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html#main-features",
+    "href": "index.html#main-features",
+    "title": "LitRecs (Literature Recommendations)",
+    "section": "Main Features",
+    "text": "Main Features\n\nBook Search: Find books by title, author, genre, or keyword.\nReading Management: Mark the books you’re reading, have read, and want to read.\nRatings and Reviews: Rate books and write detailed reviews to share your opinions with other users.\nPersonalized Recommendations: Get recommendations based on your previous readings and ratings through machine learning algorithms.\nUser-Friendly Interface: Enjoy an intuitive and easy-to-use interface designed to enhance your user experience."
+  },
+  {
+    "objectID": "index.html#why-litrecs",
+    "href": "index.html#why-litrecs",
+    "title": "LitRecs (Literature Recommendations)",
+    "section": "Why LitRecs?",
+    "text": "Why LitRecs?\nIn a world full of books to discover, LitRecs becomes your best ally in finding reads that truly excite you. Our goal is to simplify the process of searching for and selecting books, while providing you with tools to keep a detailed record of your reading habits. With LitRecs, you don’t just read; you also become part of a community that values literature as much as you do.\nWe hope you enjoy using LitRecs as much as we enjoyed developing it!"
+  },
+  {
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Get Started",
+    "section": "",
+    "text": "How to get started\nYou can get the application’s code by cloning the repository to your computer as follows:\n\nClone the Repository: Open your terminal and clone the repository using git clone https://github.com/unfresh25/LitRecs.git.\nInstall Dependencies: Navigate to the project directory and install the dependencies listed in the requirements.txt file by running cd LitRecs && pip install -r requirements.txt in the terminal.\nExplore and Develop: Review the files using your preferred code editor and start building your own recommendation system.\n\n\n\nContributions\nTo contribute, you need to request access to the database to obtain the necessary information about the books. Apart from that, we welcome contributions from the community. Any creativity, development, or bug fixes are greatly appreciated. Therefore, don’t hesitate to open an issue or send a PR once you’ve gained access."
+  }
+]
