@@ -14,6 +14,8 @@ website:
         text: Home
       - href: getting-started.qmd
         text: Get Started
+      - href: extracting-data.qmd
+        text: Guide
     right:
       - icon: github
         href: https://github.com/unfresh25/LitRecs/tree/quarto-notebook
@@ -38,5 +40,8 @@ format:
     lang: en
     df-print: paged
     mainfont: "Roboto"
+    link-external-newwindow: true
+    link-external-icon: true
+    highlight-style: github
 
 jupyter: litrecs_env

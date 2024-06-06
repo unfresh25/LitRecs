@@ -1,1 +1,5 @@
+# Folders
 litrecs_env/
+
+# Files
+.env

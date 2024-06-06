@@ -7,13 +7,6 @@
     "text": "Welcome to LitRecs, an app designed for book lovers who want to keep track of their reading and discover new works that match their tastes. Inspired by platforms like Goodreads, LitRecs offers a comprehensive and personalized experience for managing your personal library and exploring new recommendations."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
     "objectID": "index.html#main-features",
     "href": "index.html#main-features",
     "title": "LitRecs (Literature Recommendations)",
@@ -33,5 +26,26 @@
     "title": "Get Started",
     "section": "",
     "text": "How to get started\nYou can get the application’s code by cloning the repository to your computer as follows:\n\nClone the Repository: Open your terminal and clone the repository using git clone https://github.com/unfresh25/LitRecs.git.\nInstall Dependencies: Navigate to the project directory and install the dependencies listed in the requirements.txt file by running cd LitRecs && pip install -r requirements.txt in the terminal.\nExplore and Develop: Review the files using your preferred code editor and start building your own recommendation system.\n\n\n\nContributions\nTo contribute, you need to request access to the database to obtain the necessary information about the books. Apart from that, we welcome contributions from the community. Any creativity, development, or bug fixes are greatly appreciated. Therefore, don’t hesitate to open an issue or send a PR once you’ve gained access."
+  },
+  {
+    "objectID": "extracting-data.html",
+    "href": "extracting-data.html",
+    "title": "Guide",
+    "section": "",
+    "text": "To acquire data for books not already registered in our database, we use the freely available OpenLibrary API. The following function fetches books based on user requests:\n\ndef search_book_by_title(title):\n    url = f\"https://openlibrary.org/search.json\"\n    params = {\n        'title': title,\n        'limit': 5\n    }\n    response = requests.get(url, params=params)\n    if response.status_code == 200:\n        data = response.json()\n        return data['docs']\n    else:\n        print(\"Error al conectar con OpenLibrary API\")\n        return []\n\nFor books already registered, we retrieve them from a PostgreSQL database hosted on Neon. This approach ensures that books not stored in the database are fetched using the OpenLibrary API, processed, and uploaded to the database for future searches.\n\n\nTo proceed, we need the following libraries:\n\npsycopg2\npandas\npython-dotenv\nrequests\nos\n\nLet’s load these libraries:\n\nimport psycopg2 as psy\nfrom psycopg2 import Error\n\nimport pandas as pd\nfrom dotenv import load_dotenv\nimport os\nimport requests\n\nload_dotenv()\n\nDATABASE_URL = os.getenv('DATABASE_URL')\n\n\n\n\nLet’s see how to fetch information about a book using the OpenLibrary API. For instance, we will search for Animal Farm by George Orwell:\n\ntitle = \"Animal Farm\"\nbooks = search_book_by_title(title)\n\nThis code calls our search function and retrieves books related to the requested title. The response data is extensive, so let’s extract some key information:\n\nbooks_df = []\n\nfor book in books:\n    title = book.get('title')\n\n    author_list = book.get('author_name', ['Author not available'])\n    author = author_list[0] if author_list else 'Author not available'\n\n    year = book.get('first_publish_year', 'Year not available')\n\n    isbn_list = book.get('isbn', ['ISBN not available'])\n    isbn = isbn_list[0] if isbn_list else 'ISBN not available'\n\n    books_df.append([title, author, year, isbn])\n\nbooks_df = pd.DataFrame(books_df, columns=['Title', 'Author', 'Year', 'ISBN'])\nbooks_df\n\n\n\n\n\n\n\n\n\nTitle\nAuthor\nYear\nISBN\n\n\n\n\n0\nAnimal Farm\nGeorge Orwell\n1945\n1858782651\n\n\n1\nAnimal Farm / Nineteen Eighty-Four\nGeorge Orwell\n1978\n0151010269\n\n\n2\nBrian Wildsmith's Farm Animals\nBrian Wildsmith\n2001\n9781595721709\n\n\n3\nAnimal Farm with Connections\nGeorge Orwell\n1999\n0030554349\n\n\n4\nAnimal Farm\nGeorge Orwell\n2020\n9798457213630\n\n\n\n\n\n\n\n\n\nThis code compiles important information such as the book’s title, author, publication year, and ISBN. The OpenLibrary API also provides additional data about the book cover, language, editions, number of pages, publisher, genres, and more, which we will explore further in subsequent sections."
+  },
+  {
+    "objectID": "extracting-data.html#required-libraries",
+    "href": "extracting-data.html#required-libraries",
+    "title": "Guide",
+    "section": "",
+    "text": "To proceed, we need the following libraries:\n\npsycopg2\npandas\npython-dotenv\nrequests\nos\n\nLet’s load these libraries:\n\nimport psycopg2 as psy\nfrom psycopg2 import Error\n\nimport pandas as pd\nfrom dotenv import load_dotenv\nimport os\nimport requests\n\nload_dotenv()\n\nDATABASE_URL = os.getenv('DATABASE_URL')"
+  },
+  {
+    "objectID": "extracting-data.html#fetching-book-information",
+    "href": "extracting-data.html#fetching-book-information",
+    "title": "Guide",
+    "section": "",
+    "text": "Let’s see how to fetch information about a book using the OpenLibrary API. For instance, we will search for Animal Farm by George Orwell:\n\ntitle = \"Animal Farm\"\nbooks = search_book_by_title(title)\n\nThis code calls our search function and retrieves books related to the requested title. The response data is extensive, so let’s extract some key information:\n\nbooks_df = []\n\nfor book in books:\n    title = book.get('title')\n\n    author_list = book.get('author_name', ['Author not available'])\n    author = author_list[0] if author_list else 'Author not available'\n\n    year = book.get('first_publish_year', 'Year not available')\n\n    isbn_list = book.get('isbn', ['ISBN not available'])\n    isbn = isbn_list[0] if isbn_list else 'ISBN not available'\n\n    books_df.append([title, author, year, isbn])\n\nbooks_df = pd.DataFrame(books_df, columns=['Title', 'Author', 'Year', 'ISBN'])\nbooks_df\n\n\n\n\n\n\n\n\n\nTitle\nAuthor\nYear\nISBN\n\n\n\n\n0\nAnimal Farm\nGeorge Orwell\n1945\n1858782651\n\n\n1\nAnimal Farm / Nineteen Eighty-Four\nGeorge Orwell\n1978\n0151010269\n\n\n2\nBrian Wildsmith's Farm Animals\nBrian Wildsmith\n2001\n9781595721709\n\n\n3\nAnimal Farm with Connections\nGeorge Orwell\n1999\n0030554349\n\n\n4\nAnimal Farm\nGeorge Orwell\n2020\n9798457213630\n\n\n\n\n\n\n\n\n\nThis code compiles important information such as the book’s title, author, publication year, and ISBN. The OpenLibrary API also provides additional data about the book cover, language, editions, number of pages, publisher, genres, and more, which we will explore further in subsequent sections."
   }
 ]
