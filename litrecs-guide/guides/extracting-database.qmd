@@ -1,0 +1,5 @@
+---
+title: "Our database"
+---
+
+For books already registered, we retrieve them from a PostgreSQL database hosted on [Neon](https://neon.tech/). This approach ensures that books not stored in the database are fetched using the OpenLibrary API, processed, and uploaded to the database for future searches.

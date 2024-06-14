@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="In this guide, we will demonstrate how to extract book data, store it in a database, and retrieve it during book searches.">
 
-<title>LitRecs - Guide</title>
+<title>LitRecs - OpenLibrary API</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,23 +57,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./src/images/LitRecs.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../guides/extracting-database.html" rel="next">
+<link href="../guides/index.html" rel="prev">
+<link href="../src/images/LitRecs.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -111,20 +112,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./src/images/LitRecs.png" alt="LitRecs Logo" class="navbar-logo">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../src/images/LitRecs.png" alt="LitRecs Logo" class="navbar-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">LitRecs</span>
     </a>
   </div>
@@ -135,15 +136,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./getting-started.html"> 
+    <a class="nav-link" href="../getting-started.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./extracting-data.html" aria-current="page"> 
+    <a class="nav-link active" href="../guides/index.html" aria-current="page"> 
 <span class="menu-text">Guide</span></a>
   </li>  
 </ul>
@@ -164,25 +165,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../guides/extracting-data.html">OpenLibrary API</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guides/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guides/extracting-data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">OpenLibrary API</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guides/extracting-database.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Database</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+   
+  <ul>
+  <li><a href="#required-libraries" id="toc-required-libraries" class="nav-link active" data-scroll-target="#required-libraries">Required Libraries</a></li>
+  <li><a href="#fetching-book-information" id="toc-fetching-book-information" class="nav-link" data-scroll-target="#fetching-book-information">Fetching Book Information</a></li>
+  <li><a href="#looking-for-important-data" id="toc-looking-for-important-data" class="nav-link" data-scroll-target="#looking-for-important-data">Looking for important data</a></li>
+  <li><a href="#fetching-whole-data" id="toc-fetching-whole-data" class="nav-link" data-scroll-target="#fetching-whole-data">Fetching whole data</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Guide</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<h1 class="title">OpenLibrary API</h1>
 </div>
 
-<div>
-  <div class="description">
-    In this guide, we will demonstrate how to extract book data, store it in a database, and retrieve it during book searches.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -197,41 +238,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="openlibrary-api" class="level1">
-<h1>OpenLibrary API</h1>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Note that there are more functionalities that we omit in this article, as they are intuitive based on what will be explained throughout this chapter.</p>
-</div>
-</div>
-<p>To acquire data for books not already registered in our database, we use the freely available <code>OpenLibrary API</code>. The following function fetches books based on user requests:</p>
-<div id="4ca5c80b" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> search_book_by_title(title):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">"https://openlibrary.org/search.json"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'title'</span>: title,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'limit'</span>: <span class="dv">20</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, params<span class="op">=</span>params)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> response.json()</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> data[<span class="st">'docs'</span>]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Error al conectar con OpenLibrary API"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>For books already registered, we retrieve them from a PostgreSQL database hosted on <a href="https://neon.tech/">Neon</a>. This approach ensures that books not stored in the database are fetched using the OpenLibrary API, processed, and uploaded to the database for future searches.</p>
-<section id="required-libraries" class="level2">
-<h2 class="anchored" data-anchor-id="required-libraries">Required libraries</h2>
-<p>To proceed, we need the following libraries:</p>
+<p>To acquire data for books not already registered in our database, we use the freely available <code>OpenLibrary API</code>. This resource offers a variety of APIs for different purposes, such as:</p>
+<ol type="1">
+<li>Searching for books, authors, and more.</li>
+<li>Fetching books by subject name.</li>
+<li>Searching for matching text.</li>
+<li>Retrieving book covers by ISBN or OpenLibrary identifier.</li>
+</ol>
+<p>In this project, we will use some of these APIs, so please refer to this guide as needed.</p>
+<section id="required-libraries" class="level1">
+<h1>Required Libraries</h1>
+<p>First, we need to import several libraries for our project:</p>
 <ol type="1">
 <li>psycopg2</li>
 <li>pandas</li>
@@ -240,29 +257,41 @@ Important
 <li>os</li>
 </ol>
 <p>Let’s load these libraries:</p>
-<div id="2bea5847" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2 <span class="im">as</span> psy</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psycopg2 <span class="im">import</span> Error</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>DATABASE_URL <span class="op">=</span> os.getenv(<span class="st">'DATABASE_URL'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="753d8b46" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2 <span class="im">as</span> psy</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psycopg2 <span class="im">import</span> Error</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="fetching-book-information" class="level2">
-<h2 class="anchored" data-anchor-id="fetching-book-information">Fetching book information</h2>
-<p>Let’s see how to fetch information about a book using the <code>OpenLibrary API</code>. For instance, we will search for <em>Animal Farm</em> by <em>George Orwell</em>:</p>
-<div id="cb52bc12" class="cell" data-execution_count="4">
+<section id="fetching-book-information" class="level1">
+<h1>Fetching Book Information</h1>
+<p>Here’s how to fetch information about a book using a function that retrieves books based on user requests:</p>
+<div id="0377aaef" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> search_book_by_title(title):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">"https://openlibrary.org/search.json"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'title'</span>: title,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'limit'</span>: <span class="dv">20</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url, params<span class="op">=</span>params)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> response.json()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> data[<span class="st">'docs'</span>]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Error connecting to OpenLibrary API"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For example, we will search for <em>Animal Farm</em> by <em>George Orwell</em>:</p>
+<div id="d900c129" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>title <span class="op">=</span> <span class="st">"Animal Farm"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> search_book_by_title(title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This code calls our search function and retrieves books related to the requested title. The response data is extensive, so let’s extract some key information:</p>
-<div id="dbafa451" class="cell" data-execution_count="5">
+<div id="567cb9ca" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> []</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
@@ -278,7 +307,7 @@ Important
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> pd.DataFrame(books_df, columns<span class="op">=</span>[<span class="st">'Title'</span>, <span class="st">'Author'</span>, <span class="st">'Year'</span>, <span class="st">'ISBN'</span>])</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>show(books_df, ordering <span class="op">=</span> <span class="va">False</span>, searching <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<table id="itables_29d98d17_3899_4750_a3ec_37705e95eeb3" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_5757d8d0_b4ca_4a6a_a7ab_44b1d01693ac" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -359,7 +388,7 @@ Loading ITables v2.1.1 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.10/dt_bundle.js';
 
-    document.querySelectorAll("#itables_29d98d17_3899_4750_a3ec_37705e95eeb3:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_5757d8d0_b4ca_4a6a_a7ab_44b1d01693ac:not(.dataTable)").forEach(table => {
         // Define the table data
         const data = [["Animal Farm", "George Orwell", 1945, "1858782651"], ["Animal Farm / Nineteen Eighty-Four", "George Orwell", 1978, "0151010269"], ["Brian Wildsmith's Farm Animals", "Brian Wildsmith", 2001, "9781595721709"], ["Animal Farm with Connections", "George Orwell", 1999, "0030554349"], ["Animal Farm", "George Orwell", 2020, "9798457213630"], ["Animal Farm", "George Orwell", 1964, "9798365455214"], ["Animal Farm", "George Orwell", 2018, "9798675985357"], ["Farm Animal Adult Coloring Book", "Hasan coloring book", 2020, "9798586878823"], ["Animal Farm", "George Orwell", 2017, "9781091814158"], ["Anatomy and physiology of farm animals", "R. D. Frandson", 1965, "1119239710"], ["Scientific farm animal production", "Robert E. Taylor", 1988, "0132740605"], ["Reproduction in farm animals", "E. S. E. Hafez", 1987, "9780812110135"], ["Farm Animal Adult Coloring Book", "Hasan press", 2021, "9798590326181"], ["Animal Farm", "George Orwell", 2019, "9798676043452"], ["Animal Farm", "George ORWELL", 2020, "9798673539545"], ["Animal Farm", "George Orwell", 1956, "9798448462955"], ["Farm animals", "Lucy Cousins", 1990, "9780763606107"], ["Animal Farm", "Odyr", 2019, "0358410770"], ["Reproduction in farm animals", "B. Hafez", 2000, "1119265304"], ["Our animal friends at Maple Hill Farm", "Alice Provensen", 1974, "9780394921235"]];
 
@@ -376,11 +405,11 @@ Loading ITables v2.1.1 from the internet...
 <p><br></p>
 <p>This code compiles important information such as the book’s title, author, publication year, and ISBN. The OpenLibrary API also provides additional data about the book cover, language, editions, number of pages, publisher, genres, and more, which we will explore further in subsequent sections.</p>
 </section>
-<section id="looking-for-important-data" class="level2">
-<h2 class="anchored" data-anchor-id="looking-for-important-data">Looking for important data</h2>
+<section id="looking-for-important-data" class="level1">
+<h1>Looking for important data</h1>
 <p>In the previous section, we obtained relevant data about the books. However, to get other necessary information, we need to use another endpoint that takes the book edition ID as a parameter. This means first performing a search with the previous endpoint and then using the new endpoint located at <code>https://openlibrary.org/works/{key}.json</code>. An example of the results obtained through this endpoint can be seen <a href="https://openlibrary.org/works/OL1168007W.json">here</a>.</p>
 <p>To obtain this data, we will first use the initial endpoint to extract the edition codes and then use the second endpoint as follows:</p>
-<div id="952df9c3" class="cell" data-execution_count="6">
+<div id="6e99b643" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>book_keys <span class="op">=</span> []</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
@@ -388,7 +417,7 @@ Loading ITables v2.1.1 from the internet...
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    book_keys.append(edition_key)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>book_keys[<span class="dv">0</span>:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="51">
 <pre><code>['/works/OL1168007W',
  '/works/OL1167981W',
  '/works/OL1703970W',
@@ -397,7 +426,7 @@ Loading ITables v2.1.1 from the internet...
 </div>
 </div>
 <p>Now that we have the edition codes, we can define our function to call the next endpoint as follows:</p>
-<div id="5990b966" class="cell" data-execution_count="7">
+<div id="57bc0514" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> search_book_by_ed_key(key):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"https://openlibrary.org</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">.json"</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
@@ -410,7 +439,7 @@ Loading ITables v2.1.1 from the internet...
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We call the function and extract the relevant data, keeping in mind that <code>key</code> corresponds to the edition codes identified earlier:</p>
-<div id="7d6bbfdb" class="cell" data-execution_count="8">
+<div id="f18a85e0" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> []</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key <span class="kw">in</span> book_keys:</span>
@@ -426,7 +455,7 @@ Loading ITables v2.1.1 from the internet...
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> pd.DataFrame(books_df, columns<span class="op">=</span>[<span class="st">'Title'</span>, <span class="st">'Subjects'</span>, <span class="st">'Description'</span>])</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>show(books_df, ordering<span class="op">=</span><span class="va">False</span>, searching<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<table id="itables_9128d1c1_3286_4f61_b16a_da608958a85b" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_401075bc_2ba9_484f_a735_a4f351b4140f" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -506,7 +535,7 @@ Loading ITables v2.1.1 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.10/dt_bundle.js';
 
-    document.querySelectorAll("#itables_9128d1c1_3286_4f61_b16a_da608958a85b:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_401075bc_2ba9_484f_a735_a4f351b4140f:not(.dataTable)").forEach(table => {
         // Define the table data
         const data = [["Animal Farm", "British and irish fiction (fictional works by one author), political satire, classic, animal drama", "Animal Farm is a brilliant political satire and a powerful and affecting story of revolutions and idealism, power and corruption. 'All animals are equal. But some animals are more equal than others.' Mr Jones of Manor Farm is so lazy and drunken that one day he forgets to feed his livestock. The ensuing rebellion under the leadership of the pigs Napoleon and Snowball leads to the animals taking over the farm. Vowing to eliminate the terrible inequities of the farmyard, the renamed Animal Farm is organised to benefit all who walk on four legs. But as time passes, the ideals of the rebellion are corrupted, then forgotten. And something new and unexpected emerges.."], ["Animal Farm / Nineteen Eighty-Four", "domestic animals, totalitarianism, Satire, Fiction", "Contains:\\r\\n\\r\\n - Animal Farm\\r\\n - [Nineteen Eighty-Four](https://openlibrary.org/works/OL1168091W/Nineteen_Eighty-Four)"], ["Brian Wildsmith's Farm Animals", "Animal sounds, Spanish language materials, Domestic animals, Animales dom\u00e9sticos", "Animals on the farm."], ["Animal Farm with Connections", "Reading Level-Grade 5, Reading Level-Grade 4, Reading Level-Grade 7, Reading Level-Grade 6", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "", "No description available"], ["Farm Animal Adult Coloring Book", "", "No description available"], ["Animal Farm", "", "No description available"], ["Anatomy and physiology of farm animals", "Domestic animals, Physiology, Veterinary anatomy, Veterinary physiology", "No description available"], ["Scientific farm animal production", "Livestock", "No description available"], ["Reproduction in farm animals", "Livestock, Reproducao Animal, Domestic Animals, Physiologie v\u00e9t\u00e9rinaire", "No description available"], ["Farm Animal Adult Coloring Book", "", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "British and irish fiction (fictional works by one author)", "No description available"], ["Farm animals", "Domestic animals, Juvenile literature, Pictorial works, Juvenile fiction", "{'type': '/type/text', 'value': 'This board book presents labeled pictures of a duck, hen, pig, and seven other farm animals.'}"], ["Animal Farm", "Literature, Comics & graphic novels, literary, Comics & graphic novels, adaptations, Totalitarianism", "No description available"], ["Reproduction in farm animals", "Veterinary physiology, Livestock, Physiology, Reproduction", "No description available"], ["Our animal friends at Maple Hill Farm", "Domestic animals, Farm life, Juvenile literature, Livestock", "{'type': '/type/text', 'value': 'Describes animals on the authors' own farm in New York: dogs, horses, pigs, geese, chickens, cows, goats, sheep, cats, and more!'}"]];
 
@@ -521,8 +550,8 @@ Loading ITables v2.1.1 from the internet...
 </div>
 </div>
 </section>
-<section id="fetching-whole-data" class="level2">
-<h2 class="anchored" data-anchor-id="fetching-whole-data">Fetching whole data</h2>
+<section id="fetching-whole-data" class="level1">
+<h1>Fetching whole data</h1>
 <p>Now that we understand how to obtain the essential information and how the <strong>OpenLibrary</strong> API works, we can proceed to gather all the necessary data to store in our database. The required data are as follows:</p>
 <ol type="1">
 <li>book_id (key)</li>
@@ -549,7 +578,7 @@ Note
 <p>To obtain the book covers, we will use the <code>cover_i</code>, which corresponds to the ID of the covers associated with each registered book. For more information, you can consult the documentation <a href="https://openlibrary.org/dev/docs/api/covers">here</a>.</p>
 </div>
 </div>
-<div id="93ffc8a8" class="cell" data-execution_count="9">
+<div id="00da4d77" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> OpenLibraryClient:</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.base_url <span class="op">=</span> <span class="st">"https://openlibrary.org"</span></span>
@@ -618,7 +647,7 @@ Note
 <span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> pd.DataFrame(books)</span>
 <span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>show(books_df, ordering<span class="op">=</span><span class="va">False</span>, searching<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<table id="itables_88fe6630_3b32_4a86_9b86_661589139981" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_6a5eb105_a630_49b3_930d_899417f82313" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -704,7 +733,7 @@ Loading ITables v2.1.1 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.10/dt_bundle.js';
 
-    document.querySelectorAll("#itables_88fe6630_3b32_4a86_9b86_661589139981:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_6a5eb105_a630_49b3_930d_899417f82313:not(.dataTable)").forEach(table => {
         // Define the table data
         const data = [["/works/OL16607146W", "Throne of Glass", "Sarah J. Maas", "{'type': '/type/text', 'value': 'Lethal. Loyal. Legendary.\r\n\r\nEnter the world of Throne of Glass with the first book in the #1 bestselling series by Sarah J. Maas.\r\n\r\nIn a land without magic, an assassin is summoned to the castle. She has no love for the vicious king who rules from his throne of glass, but she has not come to kill him. She has come to win her freedom. If she defeats twenty-three murderers, thieves, and warriors in a competition, she will be released from prison to serve as the King\u2019s Champion.\r\n\r\nHer name is Celaena Sardothien.\r\n\r\nThe Crown Prince will provoke her. The Captain of the Guard will protect her. And a princess from a faraway country will befriend her. But something rotten dwells in the castle, and it\u2019s there to kill. When her competitors start dying mysteriously, one by one, Celaena\u2019s fight for freedom becomes a fight for survival\u2014and a desperate quest to root out the evil before it destroys her world.'}", 2012, "https://covers.openlibrary.org/b/id/13312488-M.jpg", "https://covers.openlibrary.org/b/id/13312488-L.jpg", 4.22, 60], ["/works/OL19914740W", "The Assassin's Blade / Throne of Glass / Crown of Midnight / Heir of Fire / Queen of Shadows / Empire of Storms / Tower of Dawn / Kingdom of Ash", "Sarah J. Maas", "No description available", 2018, "https://covers.openlibrary.org/b/id/8738841-M.jpg", "https://covers.openlibrary.org/b/id/8738841-L.jpg", 5.0, 3], ["/works/OL27308145W", "Throne Of Glass Series Collection 5 Books Set By Sarah J. Maas", "Sarah J. Maas", "No description available", 2019, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL21126759W", "Throne of Glass Coloring Book", "Sarah J. Maas", "{'type': '/type/text', 'value': 'For the first time, fans of Sarah J. Maas's sweeping New York Times bestselling Throne of Glass saga can experience the vivid imagery of her expansive world. Celaena battling the ridderak in the catacombs, Chaol in the gardens of the glass castle, Manon riding her wyvern through the Crossing, and many other favorite moments, characters, and objects come to life as readers explore the vibrantly detailed realm of Throne of Glass. Stunning original black-and-white drawings will bring fans deeper into the series than ever before-making this a must-have companion to Sarah J. Maas's beloved books.'}", 2016, "https://covers.openlibrary.org/b/id/14350913-M.jpg", "https://covers.openlibrary.org/b/id/14350913-L.jpg", 0.0, 0], ["/works/OL21149879W", "World of Throne of Glass", "Sarah J. Maas", "No description available", 2018, "https://covers.openlibrary.org/b/id/14350941-M.jpg", "https://covers.openlibrary.org/b/id/14350941-L.jpg", 0.0, 0], ["/works/OL31144100W", "Throne of Glass Coloring Book", "Shenita Shenita Pressley", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL20354288W", "Throne of Glass 1-3 set", "Sarah J. Maas", "No description available", 2014, "https://covers.openlibrary.org/b/id/9020498-M.jpg", "https://covers.openlibrary.org/b/id/9020498-L.jpg", 0.0, 0], ["/works/OL38039996W", "Throne of Glass Hardcover Box Set (Throne of Glass)", "Sarah J. Maas", "No description available", 2023, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL27933755W", "Throne of Glass Cookbook", "Maekawa Sukeyasu", "No description available", 2021, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL29176025W", "Throne of Gl\u00e0ss Coloring Book", "Christinia Christinia Duran", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL27921923W", "Throne of Gl\u00e0ss Coloring Book", "Elon FZ", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL37870842W", "Throne of Glass Box Set", "Sarah J. Maas", "No description available", 2024, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL34456190W", "Throne of Gl\u00e0ss Coloring Book", "Throne Of Gl\u00e0ss COLORING", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL31131086W", "Throne of Glass Coloring Book", "Jenelle Jenelle Knox", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL29190190W", "Throne of Gl\u00e0ss Coloring Book", "&#504;ba VDF", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL28070779W", "Throne of Gl\u00e0ss Coloring Book", "Nadya hy", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL27948494W", "Throne of Gl\u00e0ss Coloring Book", "Nadya gftt", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL34379224W", "Throne of Gl\u00e0ss Coloring Book", "&#504;ba QCQS", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL34201166W", "Throne of Gl\u00e0ss Coloring Book", "&#504;ba QSDZ", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL34437015W", "Throne of Gl\u00e0ss Coloring Book", "&#504;ba coloring book", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0]];
 
@@ -718,12 +747,10 @@ Loading ITables v2.1.1 from the internet...
 </script>
 </div>
 </div>
+<p><br></p>
 <p>In this case, we do not display the description in the table due to the space this column can occupy. However, it is a very relevant piece of data for us, so we should always collect it whenever possible.</p>
 
 
-<!-- -->
-
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -806,57 +833,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1193,244 +1169,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Guide"</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "In this guide, we will demonstrate how to extract book data, store it in a database, and retrieve it during book searches."</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">toc:</span><span class="co"> false</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python}</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="in">#| echo: false</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="in">from itables import show</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu"># OpenLibrary API</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>::: callout-important</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>Note that there are more functionalities that we omit in this article, as they are intuitive based on what will be explained throughout this chapter.</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>To acquire data for books not already registered in our database, we use the freely available <span class="in">`OpenLibrary API`</span>. The following function fetches books based on user requests:</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python}</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="in">def search_book_by_title(title):</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="in">    url = "https://openlibrary.org/search.json"</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="in">    params = {</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="in">        'title': title,</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="in">        'limit': 20</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="in">    response = requests.get(url, params=params)</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="in">    if response.status_code == 200:</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="in">        data = response.json()</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="in">        return data['docs']</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="in">    else:</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="in">        print("Error al conectar con OpenLibrary API")</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="in">        return []</span></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>For books already registered, we retrieve them from a PostgreSQL database hosted on <span class="co">[</span><span class="ot">Neon</span><span class="co">](https://neon.tech/)</span>. This approach ensures that books not stored in the database are fetched using the OpenLibrary API, processed, and uploaded to the database for future searches.</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Required libraries</span></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>To proceed, we need the following libraries:</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>psycopg2</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>pandas</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>python-dotenv</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>requests</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>os</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>Let's load these libraries:</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python}</span></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="in">import psycopg2 as psy</span></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="in">from psycopg2 import Error</span></span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="in">import pandas as pd</span></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="in">from dotenv import load_dotenv</span></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="in">import os</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="in">import requests</span></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="in">load_dotenv()</span></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="in">DATABASE_URL = os.getenv('DATABASE_URL')</span></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fetching book information</span></span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>Let's see how to fetch information about a book using the <span class="in">`OpenLibrary API`</span>. For instance, we will search for _Animal Farm_ by _George Orwell_:</span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python}</span></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="in">title = "Animal Farm"</span></span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a><span class="in">books = search_book_by_title(title)</span></span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>This code calls our search function and retrieves books related to the requested title. The response data is extensive, so let's extract some key information:</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python}</span></span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a><span class="in">books_df = []</span></span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="in">for book in books:</span></span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a><span class="in">    title = book.get('title')</span></span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="in">    author_list = book.get('author_name', ['Author not available'])</span></span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a><span class="in">    author = author_list[0] if author_list else 'Author not available'</span></span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="in">    year = book.get('first_publish_year', 'Year not available')</span></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="in">    isbn_list = book.get('isbn', ['ISBN not available'])</span></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="in">    isbn = isbn_list[0] if isbn_list else 'ISBN not available'</span></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="in">    books_df.append([title, author, year, isbn])</span></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="in">books_df = pd.DataFrame(books_df, columns=['Title', 'Author', 'Year', 'ISBN'])</span></span>
-<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a><span class="in">show(books_df, ordering = False, searching = False)</span></span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>This code compiles important information such as the book's title, author, publication year, and ISBN. The OpenLibrary API also provides additional data about the book cover, language, editions, number of pages, publisher, genres, and more, which we will explore further in subsequent sections.</span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Looking for important data</span></span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>In the previous section, we obtained relevant data about the books. However, to get other necessary information, we need to use another endpoint that takes the book edition ID as a parameter. This means first performing a search with the previous endpoint and then using the new endpoint located at <span class="in">`https://openlibrary.org/works/{key}.json`</span>. An example of the results obtained through this endpoint can be seen <span class="co">[</span><span class="ot">here</span><span class="co">](https://openlibrary.org/works/OL1168007W.json)</span>.</span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>To obtain this data, we will first use the initial endpoint to extract the edition codes and then use the second endpoint as follows:</span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python filename="python"}</span></span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="in">book_keys = []</span></span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a><span class="in">for book in books:</span></span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="in">    edition_key = book.get('key', '')</span></span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a><span class="in">    book_keys.append(edition_key)</span></span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a><span class="in">book_keys[0:5]</span></span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>Now that we have the edition codes, we can define our function to call the next endpoint as follows:</span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python filename="python"}</span></span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="in">def search_book_by_ed_key(key):</span></span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a><span class="in">    url = f"https://openlibrary.org{key}.json"</span></span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a><span class="in">    response = requests.get(url)</span></span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a><span class="in">    if response.status_code == 200:</span></span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a><span class="in">        data = response.json()</span></span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="in">        return data</span></span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a><span class="in">    else:</span></span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a><span class="in">        print("Error connecting to OpenLibrary API")</span></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="in">        return []</span></span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>We call the function and extract the relevant data, keeping in mind that <span class="in">`key`</span> corresponds to the edition codes identified earlier:</span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python filename="python"}</span></span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a><span class="in">books_df = []</span></span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a><span class="in">for key in book_keys:</span></span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a><span class="in">    data = search_book_by_ed_key(key)</span></span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a><span class="in">    title = data.get('title', '')</span></span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="in">    subjects_v = data.get('subjects', [])[0:4]</span></span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a><span class="in">    subjects = ', '.join(subjects_v)</span></span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a><span class="in">    description = data.get('description', 'No description available')</span></span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a><span class="in">    books_df.append([title, subjects, description])</span></span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a><span class="in">books_df = pd.DataFrame(books_df, columns=['Title', 'Subjects', 'Description'])</span></span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="in">show(books_df, ordering=False, searching=False)</span></span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fetching whole data</span></span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a>Now that we understand how to obtain the essential information and how the **OpenLibrary** API works, we can proceed to gather all the necessary data to store in our database. The required data are as follows:</span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>book_id (key)</span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>title</span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>author</span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>description</span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>first_publish_year</span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>cover_medium</span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>cover_large</span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>average_rating</span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a><span class="ss">9. </span>rating_count</span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>To do this, we will define the following functions:</span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>::: callout-note</span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>To obtain the book covers, we will use the <span class="in">`cover_i`</span>, which corresponds to the ID of the covers associated with each registered book. For more information, you can consult the documentation <span class="co">[</span><span class="ot">here</span><span class="co">](https://openlibrary.org/dev/docs/api/covers)</span>.</span>
-<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a><span class="in">``` {python}</span></span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a><span class="in">class OpenLibraryClient:</span></span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a><span class="in">    def __init__(self):</span></span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a><span class="in">        self.base_url = "https://openlibrary.org"</span></span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a><span class="in">    def get_book_info(self, title, limit=20):</span></span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a><span class="in">        url = f"{self.base_url}/search.json"</span></span>
-<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a><span class="in">        params = {</span></span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a><span class="in">            'title': title,</span></span>
-<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a><span class="in">            'limit': limit</span></span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a><span class="in">        }</span></span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a><span class="in">        response = requests.get(url, params=params)</span></span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a><span class="in">        if response.status_code == 200:</span></span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a><span class="in">            data = response.json()</span></span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="in">            return data['docs']</span></span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a><span class="in">        else:</span></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a><span class="in">            print("Error connecting to OpenLibrary API")</span></span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a><span class="in">            return []</span></span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a><span class="in">    def get_book_description(self, key):</span></span>
-<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a><span class="in">        url = f"{self.base_url}{key}.json"</span></span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="in">        response = requests.get(url)</span></span>
-<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a><span class="in">        if response.status_code == 200:</span></span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a><span class="in">            data = response.json()</span></span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a><span class="in">            return data</span></span>
-<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a><span class="in">        else:</span></span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a><span class="in">            print("Error connecting to OpenLibrary API")</span></span>
-<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a><span class="in">            return {}</span></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a><span class="in">    def fetch_books(self, title):</span></span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a><span class="in">        books = self.get_book_info(title)</span></span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a><span class="in">        books_data = []</span></span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a><span class="in">        for book in books:</span></span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a><span class="in">            book_id = book.get('key', '')</span></span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a><span class="in">            title = book.get('title', 'No title available')</span></span>
-<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a><span class="in">            author_list = book.get('author_name', ['Author not available'])</span></span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a><span class="in">            author = author_list[0] if author_list else 'Author not available'</span></span>
-<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a><span class="in">            description = self.get_book_description(book_id).get('description', 'No description available')</span></span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a><span class="in">            year = book.get('first_publish_year', 'Year not available')</span></span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a><span class="in">            cover_i = book.get('cover_i', '')</span></span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a><span class="in">            cover_m = f'https://covers.openlibrary.org/b/id/{cover_i}-M.jpg'</span></span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a><span class="in">            cover_l = f'https://covers.openlibrary.org/b/id/{cover_i}-L.jpg'</span></span>
-<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a><span class="in">            avg_r = book.get('ratings_average', 0)</span></span>
-<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a><span class="in">            r_count = book.get('ratings_count', 0)</span></span>
-<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a><span class="in">            </span></span>
-<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a><span class="in">            books_data.append({</span></span>
-<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a><span class="in">                'book_id': book_id,</span></span>
-<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a><span class="in">                'title': title,</span></span>
-<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a><span class="in">                'author': author,</span></span>
-<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a><span class="in">                'description': description,</span></span>
-<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a><span class="in">                'year': year,</span></span>
-<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a><span class="in">                'cover_m': cover_m,</span></span>
-<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a><span class="in">                'cover_l': cover_l,</span></span>
-<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a><span class="in">                'avg_r': round(avg_r, 2),</span></span>
-<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a><span class="in">                'r_count': r_count</span></span>
-<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a><span class="in">            })</span></span>
-<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a><span class="in">        return books_data</span></span>
-<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a><span class="in">client = OpenLibraryClient()</span></span>
-<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a><span class="in">books = client.fetch_books("Throne Of Glass")</span></span>
-<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a><span class="in">books_df = pd.DataFrame(books)</span></span>
-<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a><span class="in">show(books_df, ordering=False, searching=False)</span></span>
-<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a>In this case, we do not display the description in the table due to the space this column can occupy. However, it is a very relevant piece of data for us, so we should always collect it whenever possible.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></div></div></div></div>
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../guides/index.html" class="pagination-link" aria-label="Overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../guides/extracting-database.html" class="pagination-link" aria-label="Database">
+        <span class="nav-page-text">Database</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1462,5 +1213,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

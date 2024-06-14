@@ -14,11 +14,24 @@ website:
         text: Home
       - href: getting-started.qmd
         text: Get Started
-      - href: extracting-data.qmd
+      - href: guides/index.qmd
         text: Guide
     right:
       - icon: github
         href: https://github.com/unfresh25/LitRecs/tree/quarto-notebook
+  
+  sidebar: 
+    - id: guides
+      title: Guides
+      collapse-level: 1
+      contents:
+        - text: Overview
+          href: guides/index.qmd
+        - text: OpenLibrary API
+          href: guides/extracting-data.qmd
+        - text: Database
+          href: guides/extracting-database.qmd
+
   page-footer:
     border: true
     left: "Made by Jorge Borja, MsC."
@@ -33,12 +46,11 @@ format:
     theme: cyborg
     css: styles.css
     toc: true
+    toc-title: ""
     code-copy: true
     code-overflow: wrap
-    code-tools: true
     smooth-scroll: true
     lang: en
-    df-print: paged
     mainfont: "Roboto"
     link-external-newwindow: true
     link-external-icon: true

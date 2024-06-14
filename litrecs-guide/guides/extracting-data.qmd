@@ -1,0 +1,234 @@
+---
+title: "OpenLibrary API"
+toc-title: ""
+---
+
+``` {python}
+#| echo: false
+from itables import show
+```
+
+To acquire data for books not already registered in our database, we use the freely available `OpenLibrary API`. This resource offers a variety of APIs for different purposes, such as:
+
+1. Searching for books, authors, and more.
+2. Fetching books by subject name.
+3. Searching for matching text.
+4. Retrieving book covers by ISBN or OpenLibrary identifier.
+
+In this project, we will use some of these APIs, so please refer to this guide as needed.
+
+# Required Libraries
+
+First, we need to import several libraries for our project:
+
+1. psycopg2
+2. pandas
+3. python-dotenv
+4. requests
+5. os
+
+Let's load these libraries:
+
+``` {python}
+import psycopg2 as psy
+from psycopg2 import Error
+
+import pandas as pd
+from dotenv import load_dotenv
+import os
+import requests
+```
+
+# Fetching Book Information
+
+Here's how to fetch information about a book using a function that retrieves books based on user requests:
+
+``` {python}
+def search_book_by_title(title):
+    url = "https://openlibrary.org/search.json"
+    params = {
+        'title': title,
+        'limit': 20
+    }
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        return data['docs']
+    else:
+        print("Error connecting to OpenLibrary API")
+        return []
+```
+
+For example, we will search for _Animal Farm_ by _George Orwell_:
+
+``` {python}
+title = "Animal Farm"
+books = search_book_by_title(title)
+```
+
+This code calls our search function and retrieves books related to the requested title. The response data is extensive, so let's extract some key information:
+
+``` {python}
+books_df = []
+
+for book in books:
+    title = book.get('title')
+    author_list = book.get('author_name', ['Author not available'])
+    author = author_list[0] if author_list else 'Author not available'
+    year = book.get('first_publish_year', 'Year not available')
+    isbn_list = book.get('isbn', ['ISBN not available'])
+    isbn = isbn_list[0] if isbn_list else 'ISBN not available'
+    
+    books_df.append([title, author, year, isbn])
+
+books_df = pd.DataFrame(books_df, columns=['Title', 'Author', 'Year', 'ISBN'])
+show(books_df, ordering = False, searching = False)
+```
+
+<br>
+
+This code compiles important information such as the book's title, author, publication year, and ISBN. The OpenLibrary API also provides additional data about the book cover, language, editions, number of pages, publisher, genres, and more, which we will explore further in subsequent sections.
+
+# Looking for important data
+
+In the previous section, we obtained relevant data about the books. However, to get other necessary information, we need to use another endpoint that takes the book edition ID as a parameter. This means first performing a search with the previous endpoint and then using the new endpoint located at `https://openlibrary.org/works/{key}.json`. An example of the results obtained through this endpoint can be seen [here](https://openlibrary.org/works/OL1168007W.json).
+
+To obtain this data, we will first use the initial endpoint to extract the edition codes and then use the second endpoint as follows:
+
+``` {python filename="python"}
+book_keys = []
+
+for book in books:
+    edition_key = book.get('key', '')
+    book_keys.append(edition_key)
+
+book_keys[0:5]
+```
+
+Now that we have the edition codes, we can define our function to call the next endpoint as follows:
+
+``` {python filename="python"}
+def search_book_by_ed_key(key):
+    url = f"https://openlibrary.org{key}.json"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    else:
+        print("Error connecting to OpenLibrary API")
+        return []
+```
+
+We call the function and extract the relevant data, keeping in mind that `key` corresponds to the edition codes identified earlier:
+
+``` {python filename="python"}
+books_df = []
+
+for key in book_keys:
+    data = search_book_by_ed_key(key)
+
+    title = data.get('title', '')
+    subjects_v = data.get('subjects', [])[0:4]
+    subjects = ', '.join(subjects_v)
+    description = data.get('description', 'No description available')
+
+    books_df.append([title, subjects, description])
+
+books_df = pd.DataFrame(books_df, columns=['Title', 'Subjects', 'Description'])
+show(books_df, ordering=False, searching=False)
+```
+
+# Fetching whole data
+
+Now that we understand how to obtain the essential information and how the **OpenLibrary** API works, we can proceed to gather all the necessary data to store in our database. The required data are as follows:
+
+1. book_id (key)
+2. title
+3. author
+4. description
+5. first_publish_year
+6. cover_medium
+7. cover_large
+8. average_rating
+9. rating_count
+
+To do this, we will define the following functions:
+
+::: callout-note
+To obtain the book covers, we will use the `cover_i`, which corresponds to the ID of the covers associated with each registered book. For more information, you can consult the documentation [here](https://openlibrary.org/dev/docs/api/covers).
+:::
+
+``` {python}
+class OpenLibraryClient:
+    def __init__(self):
+        self.base_url = "https://openlibrary.org"
+    
+    def get_book_info(self, title, limit=20):
+        url = f"{self.base_url}/search.json"
+        params = {
+            'title': title,
+            'limit': limit
+        }
+        response = requests.get(url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            return data['docs']
+        else:
+            print("Error connecting to OpenLibrary API")
+            return []
+
+    def get_book_description(self, key):
+        url = f"{self.base_url}{key}.json"
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            data = response.json()
+            return data
+        else:
+            print("Error connecting to OpenLibrary API")
+            return {}
+
+    def fetch_books(self, title):
+        books = self.get_book_info(title)
+        books_data = []
+        for book in books:
+            book_id = book.get('key', '')
+            title = book.get('title', 'No title available')
+
+            author_list = book.get('author_name', ['Author not available'])
+            author = author_list[0] if author_list else 'Author not available'
+
+            description = self.get_book_description(book_id).get('description', 'No description available')
+            year = book.get('first_publish_year', 'Year not available')
+
+            cover_i = book.get('cover_i', '')
+            cover_m = f'https://covers.openlibrary.org/b/id/{cover_i}-M.jpg'
+            cover_l = f'https://covers.openlibrary.org/b/id/{cover_i}-L.jpg'
+
+            avg_r = book.get('ratings_average', 0)
+            r_count = book.get('ratings_count', 0)
+            
+            books_data.append({
+                'book_id': book_id,
+                'title': title,
+                'author': author,
+                'description': description,
+                'year': year,
+                'cover_m': cover_m,
+                'cover_l': cover_l,
+                'avg_r': round(avg_r, 2),
+                'r_count': r_count
+            })
+        return books_data
+
+client = OpenLibraryClient()
+books = client.fetch_books("Throne Of Glass")
+
+books_df = pd.DataFrame(books)
+show(books_df, ordering=False, searching=False)
+```
+
+<br>
+
+In this case, we do not display the description in the table due to the space this column can occupy. However, it is a very relevant piece of data for us, so we should always collect it whenever possible.
