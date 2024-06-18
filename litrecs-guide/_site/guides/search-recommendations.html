@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../guides/extracting-database.html">Database</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../guides/search-recommendations.html">Search Recommendations</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -189,8 +189,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../guides/extracting-database.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Database</span></a>
+  <a href="../guides/search-recommendations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Search Recommendations</span></a>
   </div>
 </li>
     </ul>
@@ -200,15 +200,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#búsqueda-de-libros" id="toc-búsqueda-de-libros" class="nav-link active" data-scroll-target="#búsqueda-de-libros">Búsqueda de libros</a>
-  <ul class="collapse">
-  <li><a href="#búsqueda-por-título" id="toc-búsqueda-por-título" class="nav-link" data-scroll-target="#búsqueda-por-título">Búsqueda por título</a></li>
-  <li><a href="#búsqueda-por-autor" id="toc-búsqueda-por-autor" class="nav-link" data-scroll-target="#búsqueda-por-autor">Búsqueda por autor</a></li>
-  <li><a href="#búsqueda-por-palabras-claves" id="toc-búsqueda-por-palabras-claves" class="nav-link" data-scroll-target="#búsqueda-por-palabras-claves">Búsqueda por palabras claves</a></li>
-  </ul></li>
+  <li><a href="#book-search" id="toc-book-search" class="nav-link active" data-scroll-target="#book-search">Book Search</a></li>
+  <li><a href="#search-by-title" id="toc-search-by-title" class="nav-link" data-scroll-target="#search-by-title">Search by Title</a></li>
+  <li><a href="#search-by-author" id="toc-search-by-author" class="nav-link" data-scroll-target="#search-by-author">Search by Author</a></li>
+  <li><a href="#search-by-keywords" id="toc-search-by-keywords" class="nav-link" data-scroll-target="#search-by-keywords">Search by Keywords</a></li>
   </ul>
 </nav>
     </div>
@@ -234,10 +231,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>En esta sección hablaremos acerca de las recomendaciones dadas a los usuarios con base a la búsqueda que haya realizado o el libro que haya ingresado para conocer su información. Es decir, inicialmente veremos las recomendaciones conocidas como “you might also like this”.</p>
-<p>Sin embargo, veamos inicialmente qué es lo que tenemos en nuestra base de datos actualmente. Es decir, veamos cuántos libros tenemos en nuestra base de datos, cuántos libros tenemos por fecha de publicación, los géneros literarios más comunes entre nuestros libros y otras cosas.</p>
-<p>Para ello, carguemos inicialmente las librerias necesarias para la obtención de los datos, la visualización y procesaimiento de estos:</p>
-<div id="1d052d4f" class="cell" data-execution_count="2">
+<p>In this section, we will discuss <code>recommendations</code> offered to users based on their searches or the book they input to gather information. Specifically, we will explore recommendations known as “you might also like this”.</p>
+<p>To perform these tasks, we will first load the necessary libraries for data retrieval and processing:</p>
+<div id="8bccdc63" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -252,12 +248,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>engine <span class="op">=</span> create_engine(DATABASE_URL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note que <code>DATABASE_URL</code> es simplemente el enlace de conexión a nuestra base de datos en <a href="https://neon.tech/">Neon</a>.</p>
-<section id="búsqueda-de-libros" class="level1">
-<h1>Búsqueda de libros</h1>
-<p>Para obtener la información de la base de datos utilizaremos las librerias <code>sqlalchemy</code>, <code>psycopg2</code> y <code>pandas</code>. Hay que tener en cuenta que la base de datos con la que estamos trabajando es de tipo <em>postgreSQL</em>, en caso de tener la información en otra deberá cambiar las librerias.</p>
-<p>Creemos una función inicialmente que nos permitirá obtener los libros que deseamos buscar:</p>
-<div id="f6628edf" class="cell" data-execution_count="3">
+<p>It’s important to note that <code>DATABASE_URL</code> is simply the connection link to our database on <a href="https://neon.tech/">Neon</a>.</p>
+<section id="book-search" class="level3">
+<h3 class="anchored" data-anchor-id="book-search">Book Search</h3>
+<p>We will use the <code>sqlalchemy</code>, <code>psycopg2</code>, and <code>pandas</code> libraries to access the database, which in our case is PostgreSQL. If you are using a different type of database, you will need to adjust the libraries accordingly.</p>
+<p>We’ll start by creating a function to search for specific books:</p>
+<div id="cbec43b3" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> search_book(search):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    search <span class="op">=</span> search.replace(<span class="st">" "</span>, <span class="st">" &amp; "</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -272,50 +268,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> conn.execute(query, {<span class="st">'search'</span>: search})</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result.fetchall()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Esto lo que hará es buscar en nuestra base de datos por palabras claves del título que estemos buscando.</p>
-<section id="búsqueda-por-título" class="level2">
-<h2 class="anchored" data-anchor-id="búsqueda-por-título">Búsqueda por título</h2>
-<p>Si un usuario desea buscar la saga <code>Throne of Glass</code> de la escritora <em>Sarah J. Maas</em>, los resultados que obtendría serían los siguientes:</p>
-<div id="d5c4eb53" class="cell" data-execution_count="4">
+<p>This function searches our database for user-entered keywords and returns the titles, authors, and genres of the books found with the requested characteristics.</p>
+</section>
+<section id="search-by-title" class="level3">
+<h3 class="anchored" data-anchor-id="search-by-title">Search by Title</h3>
+<p>Suppose a user wants to search for the “Throne of Glass” series by author Sarah J. Maas. The results would be as follows:</p>
+<div id="bf0d2656" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> search_book(<span class="st">'Throne of Glass'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Title: </span><span class="sc">{</span>book<span class="sc">.</span>title<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Author: </span><span class="sc">{</span>book<span class="sc">.</span>author<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Genres: </span><span class="sc">{</span>book<span class="sc">.</span>genres<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Genres:'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> book.genres.replace(<span class="st">'['</span>, <span class="st">''</span>).replace(<span class="st">']'</span>, <span class="st">''</span>).replace(<span class="st">"'"</span>, <span class="st">""</span>).split(<span class="st">', '</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> genre <span class="kw">in</span> genres:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'- </span><span class="sc">{</span>genre<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Title: Throne of Glass
 Author: Sarah J. Maas
-Genres: ['Courts and courtiers', 'JUVENILE FICTION / Love &amp; Romance', 'Prisoners', 'Assassins', 'Princes']
-
-Title: The Assassin’s Blade
-Author: Sarah J. Maas
-Genres: ['Fiction', 'collections &amp; anthologies', 'Young adult fiction', 'dark fantasy', 'fantasy', 'Female assassins in fiction', 'Fantasy', '[series:Throne_of_Glass]']
-
-Title: World of Throne of Glass
-Author: Sarah J. Maas
-Genres: ['Literature', 'Fiction', 'history and criticism', 'juvenile literature']
-</code></pre>
-</div>
-</div>
-<p>Notemos que los <em>géneros</em> de los libros vienen en forma de “vector” pero como cadena de texto. Para solucionar esto podríamos simplemente realizar lo siguiente:</p>
-<div id="76b07271" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Title: </span><span class="sc">{</span>book<span class="sc">.</span>title<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Author: </span><span class="sc">{</span>book<span class="sc">.</span>author<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Genres'</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> book.genres.replace(<span class="st">'['</span>, <span class="st">''</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.replace(<span class="st">']'</span>, <span class="st">''</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.replace(<span class="st">"'"</span>, <span class="st">""</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.split(<span class="st">', '</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> genre <span class="kw">in</span> genres:</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'- </span><span class="sc">{</span>genre<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Title: Throne of Glass
-Author: Sarah J. Maas
-Genres
+Genres:
 - Courts and courtiers
 - Juvenile fiction / love &amp; romance
 - Prisoners
@@ -324,7 +295,7 @@ Genres
 
 Title: The Assassin’s Blade
 Author: Sarah J. Maas
-Genres
+Genres:
 - Fiction
 - Collections &amp; anthologies
 - Young adult fiction
@@ -336,7 +307,7 @@ Genres
 
 Title: World of Throne of Glass
 Author: Sarah J. Maas
-Genres
+Genres:
 - Literature
 - Fiction
 - History and criticism
@@ -345,77 +316,69 @@ Genres
 </div>
 </div>
 </section>
-<section id="búsqueda-por-autor" class="level2">
-<h2 class="anchored" data-anchor-id="búsqueda-por-autor">Búsqueda por autor</h2>
-<p>En el caso de que el usuario desee buscar simplemente libros de un autor específico, la búsqueda se realizaría de la misma manera. Utilicemos nuevamente a la autora <em>Sarah J. Maas</em> pero en este caso no buscaremos por un libro en específico sino por las obras que haya realizado.</p>
-<div id="2f7eee2d" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> search_book(<span class="st">'Sarah J. Maas'</span>)</span>
+<section id="search-by-author" class="level3">
+<h3 class="anchored" data-anchor-id="search-by-author">Search by Author</h3>
+<p>If the user wants to search for all books by a specific author, such as Sarah J. Maas, the search would be conducted as follows:</p>
+<div id="b1ba30b7" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> search_book(<span class="st">'Sarah J. Maas'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Title: </span><span class="sc">{</span>book<span class="sc">.</span>title<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Author: </span><span class="sc">{</span>book<span class="sc">.</span>author<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Genres:'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> book.genres.replace(<span class="st">'['</span>, <span class="st">''</span>).replace(<span class="st">']'</span>, <span class="st">''</span>).replace(<span class="st">"'"</span>, <span class="st">""</span>).split(<span class="st">', '</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> genre <span class="kw">in</span> genres:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'- </span><span class="sc">{</span>genre<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Title: Throne of Glass
+Author: Sarah J. Maas
+Genres:
+- Courts and courtiers
+- Juvenile fiction / love &amp; romance
+- Prisoners
+- Assassins
+- Princes
+
+Title: The Assassin’s Blade
+Author: Sarah J. Maas
+Genres:
+- Fiction
+- Collections &amp; anthologies
+- Young adult fiction
+- Dark fantasy
+- Fantasy
+- Female assassins in fiction
+- Fantasy
+- Series:throne_of_glass
+
+Title: World of Throne of Glass
+Author: Sarah J. Maas
+Genres:
+- Literature
+- Fiction
+- History and criticism
+- Juvenile literature
+</code></pre>
+</div>
+</div>
+</section>
+<section id="search-by-keywords" class="level3">
+<h3 class="anchored" data-anchor-id="search-by-keywords">Search by Keywords</h3>
+<p>Finally, even if the user doesn’t know the specific title or author, they can search for books using keywords like “fantasy young adult romance”. The process to retrieve results would be similar:</p>
+<div id="03bf8ba8" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> search_book(<span class="st">'fantasy young adult romance'</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Title: </span><span class="sc">{</span>book<span class="sc">.</span>title<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Author: </span><span class="sc">{</span>book<span class="sc">.</span>author<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Genres'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> book.genres.replace(<span class="st">'['</span>, <span class="st">''</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.replace(<span class="st">']'</span>, <span class="st">''</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.replace(<span class="st">"'"</span>, <span class="st">""</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.split(<span class="st">', '</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> genre <span class="kw">in</span> genres:</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'- </span><span class="sc">{</span>genre<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Title: Throne of Glass
-Author: Sarah J. Maas
-Genres
-- Courts and courtiers
-- Juvenile fiction / love &amp; romance
-- Prisoners
-- Assassins
-- Princes
-
-Title: The Assassin’s Blade
-Author: Sarah J. Maas
-Genres
-- Fiction
-- Collections &amp; anthologies
-- Young adult fiction
-- Dark fantasy
-- Fantasy
-- Female assassins in fiction
-- Fantasy
-- Series:throne_of_glass
-
-Title: World of Throne of Glass
-Author: Sarah J. Maas
-Genres
-- Literature
-- Fiction
-- History and criticism
-- Juvenile literature
-</code></pre>
-</div>
-</div>
-</section>
-<section id="búsqueda-por-palabras-claves" class="level2">
-<h2 class="anchored" data-anchor-id="búsqueda-por-palabras-claves">Búsqueda por palabras claves</h2>
-<p>De esta forma, incluso si el usuario no conoce el título ni el autor del libro que desea leer o simplemente desea buscar libros por palabras claves específicas la forma de obtener los resultados sería nuevamente utilizando la función de búsqueda. De esta forma, busquemos suponiendo que un usuario busca <em>fantasy young adult romance</em> obtendría:</p>
-<div id="065462b0" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> search_book(<span class="st">'fantasy young adult romance'</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Title: </span><span class="sc">{</span>book<span class="sc">.</span>title<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Author: </span><span class="sc">{</span>book<span class="sc">.</span>author<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Genres'</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> book.genres.replace(<span class="st">'['</span>, <span class="st">''</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.replace(<span class="st">']'</span>, <span class="st">''</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.replace(<span class="st">"'"</span>, <span class="st">""</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> genres.split(<span class="st">', '</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> genre <span class="kw">in</span> genres:</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'- </span><span class="sc">{</span>genre<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Genres:'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    genres <span class="op">=</span> book.genres.replace(<span class="st">'['</span>, <span class="st">''</span>).replace(<span class="st">']'</span>, <span class="st">''</span>).replace(<span class="st">"'"</span>, <span class="st">""</span>).split(<span class="st">', '</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> genre <span class="kw">in</span> genres:</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'- </span><span class="sc">{</span>genre<span class="sc">.</span>capitalize()<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Title: Vampire Academy
 Author: Richelle Mead
-Genres
+Genres:
 - Young adult
 - Collectionid:eaneschallenge
 - Romance
@@ -423,7 +386,7 @@ Genres
 
 Title: Broken Throne
 Author: Victoria Aveyard
-Genres
+Genres:
 - General
 - Collections &amp; anthologies
 - Young adult fiction
@@ -434,7 +397,7 @@ Genres
 
 Title: Serpent and Dove
 Author: Shelby Mahurin
-Genres
+Genres:
 - Wizards &amp; witches
 - Paranormal
 - Nyt:young-adult-hardcover=2019-09-22
@@ -447,7 +410,6 @@ Genres
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

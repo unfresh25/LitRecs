@@ -231,4 +231,6 @@ show(books_df, ordering=False, searching=False)
 
 <br>
 
-In this case, we do not display the description in the table due to the space this column can occupy. However, it is a very relevant piece of data for us, so we should always collect it whenever possible.
+In this case, we do not display the description in the table due to the space it would occupy. However, it is a crucial piece of data, so we should always collect it whenever possible.
+
+When a user searches for books that are already registered, we retrieve them from a PostgreSQL database hosted on [Neon](https://neon.tech/). This ensures that any books not found in the database are fetched using the OpenLibrary API, processed, and uploaded to the database for future searches. Since this guide focuses on processing books and making recommendations, we'll skip the detailed steps of querying and updating the database. Instead, we'll concentrate on generating recommendations based on searches, reading history, and friends' books.

@@ -1,0 +1,103 @@
+---
+title: "Search recommendations"
+toc-title: ""
+---
+
+``` {python}
+#| echo: false
+from itables import show
+```
+
+In this section, we will discuss `recommendations` offered to users based on their searches or the book they input to gather information. Specifically, we will explore recommendations known as "you might also like this".
+
+To perform these tasks, we will first load the necessary libraries for data retrieval and processing:
+
+``` {python}
+import os
+from dotenv import load_dotenv
+
+import psycopg2 as psy
+from sqlalchemy import create_engine, text
+
+import pandas as pd
+
+load_dotenv()
+
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+engine = create_engine(DATABASE_URL)
+```
+
+It's important to note that `DATABASE_URL` is simply the connection link to our database on [Neon](https://neon.tech/).
+
+### Book Search
+
+We will use the `sqlalchemy`, `psycopg2`, and `pandas` libraries to access the database, which in our case is PostgreSQL. If you are using a different type of database, you will need to adjust the libraries accordingly.
+
+We'll start by creating a function to search for specific books:
+
+``` {python}
+def search_book(search):
+    search = search.replace(" ", " & ")
+
+    query = text("""
+        SELECT title, author, genres
+        FROM books
+        WHERE con_info @@ to_tsquery(:search)
+        LIMIT 3;
+    """)
+
+    with engine.connect() as conn:
+        result = conn.execute(query, {'search': search})
+        return result.fetchall()
+```
+
+This function searches our database for user-entered keywords and returns the titles, authors, and genres of the books found with the requested characteristics.
+
+### Search by Title
+
+Suppose a user wants to search for the "Throne of Glass" series by author Sarah J. Maas. The results would be as follows:
+
+``` {python}
+books = search_book('Throne of Glass')
+for book in books:
+    print(f'Title: {book.title}')
+    print(f'Author: {book.author}')
+    print(f'Genres:')
+    genres = book.genres.replace('[', '').replace(']', '').replace("'", "").split(', ')
+    for genre in genres:
+        print(f'- {genre.capitalize()}')
+    print()
+```
+
+### Search by Author
+
+If the user wants to search for all books by a specific author, such as Sarah J. Maas, the search would be conducted as follows:
+
+``` {python}
+books = search_book('Sarah J. Maas')
+for book in books:
+    print(f'Title: {book.title}')
+    print(f'Author: {book.author}')
+    print(f'Genres:')
+    genres = book.genres.replace('[', '').replace(']', '').replace("'", "").split(', ')
+    for genre in genres:
+        print(f'- {genre.capitalize()}')
+    print()
+```
+
+### Search by Keywords
+
+Finally, even if the user doesn't know the specific title or author, they can search for books using keywords like "fantasy young adult romance". The process to retrieve results would be similar:
+
+``` {python}
+books = search_book('fantasy young adult romance')
+for book in books:
+    print(f'Title: {book.title}')
+    print(f'Author: {book.author}')
+    print(f'Genres:')
+    genres = book.genres.replace('[', '').replace(']', '').replace("'", "").split(', ')
+    for genre in genres:
+        print(f'- {genre.capitalize()}')
+    print()
+```

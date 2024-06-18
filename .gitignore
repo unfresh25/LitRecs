@@ -3,3 +3,4 @@ litrecs_env/
 
 # Files
 .env
+save_to_db.py

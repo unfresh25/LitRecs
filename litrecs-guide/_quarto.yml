@@ -29,8 +29,8 @@ website:
           href: guides/index.qmd
         - text: OpenLibrary API
           href: guides/extracting-data.qmd
-        - text: Database
-          href: guides/extracting-database.qmd
+        - text: Search Recommendations
+          href: guides/search-recommendations.qmd
 
   page-footer:
     border: true
