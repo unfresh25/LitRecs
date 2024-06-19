@@ -156,8 +156,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../guides/extracting-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Database</span></a>
+  <a href="../guides/search-recommendations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Search Recommendations</span></a>
   </div>
 </li>
     </ul>
@@ -209,14 +209,14 @@ Important
 <p>In our process of extracting book data, we use two different methods. One method involves acquiring data for books not already in our database. For this, we use the freely available <code>OpenLibrary API</code>, provided by the largest digital library on the internet, the <a href="https://archive.org/">Internet Archive</a>. You can explore the OpenLibrary website by clicking <a href="https://openlibrary.org/developers/api">here</a>, although we will cover the important aspects of using it throughout this chapter.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/71192472/339635987-ff89adba-5823-49e8-a3c3-1506b0292d91.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240614%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240614T044625Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=509c5179bec54edb59b203a8911b5ab865181d265e69950844851bb0fface69c&amp;X-Amz-SignedHeaders=host&amp;actor_id=71192472&amp;key_id=0&amp;repo_id=809987031" class="img-fluid figure-img"></p>
+<p><img src="../src/images/openlibrary.png" class="img-fluid figure-img"></p>
 <figcaption>OpenLibraryAPI Website</figcaption>
 </figure>
 </div>
 <p>The other method involves retrieving books already registered in our database. We use a PostgreSQL database hosted on <a href="https://neon.tech/">Neon</a>. This approach ensures that books not stored in the database are fetched using the OpenLibrary API, processed, and uploaded to the database for future searches. It also helps us keep our data centralized. Searching for books in our database is faster than fetching data from an API, which could change or be removed in the future.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/71192472/339637546-190f5653-18b6-40b3-83cd-18508de5d1c8.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240614%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20240614T044657Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=15234e738da9325b80342563af816f72a038a910d6ba710126832f91ade62201&amp;X-Amz-SignedHeaders=host&amp;actor_id=71192472&amp;key_id=0&amp;repo_id=809987031" class="img-fluid figure-img"></p>
+<p><img src="../src/images/neon.png" class="img-fluid figure-img"></p>
 <figcaption>Neon Website</figcaption>
 </figure>
 </div>
@@ -305,7 +305,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/unfresh25\.quarto\.pub\/litrecs");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

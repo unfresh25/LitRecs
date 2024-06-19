@@ -10,8 +10,8 @@ Note that some functionalities are omitted in this article, as they are intuitiv
 
 In our process of extracting book data, we use two different methods. One method involves acquiring data for books not already in our database. For this, we use the freely available `OpenLibrary API`, provided by the largest digital library on the internet, the [Internet Archive](https://archive.org/). You can explore the OpenLibrary website by clicking [here](https://openlibrary.org/developers/api), although we will cover the important aspects of using it throughout this chapter.
 
-![OpenLibraryAPI Website](https://github-production-user-asset-6210df.s3.amazonaws.com/71192472/339635987-ff89adba-5823-49e8-a3c3-1506b0292d91.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240614%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240614T044625Z&X-Amz-Expires=300&X-Amz-Signature=509c5179bec54edb59b203a8911b5ab865181d265e69950844851bb0fface69c&X-Amz-SignedHeaders=host&actor_id=71192472&key_id=0&repo_id=809987031)
+![OpenLibraryAPI Website](../src/images/openlibrary.png)
 
 The other method involves retrieving books already registered in our database. We use a PostgreSQL database hosted on [Neon](https://neon.tech/). This approach ensures that books not stored in the database are fetched using the OpenLibrary API, processed, and uploaded to the database for future searches. It also helps us keep our data centralized. Searching for books in our database is faster than fetching data from an API, which could change or be removed in the future.
 
-![Neon Website](https://github-production-user-asset-6210df.s3.amazonaws.com/71192472/339637546-190f5653-18b6-40b3-83cd-18508de5d1c8.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240614%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240614T044657Z&X-Amz-Expires=300&X-Amz-Signature=15234e738da9325b80342563af816f72a038a910d6ba710126832f91ade62201&X-Amz-SignedHeaders=host&actor_id=71192472&key_id=0&repo_id=809987031)
+![Neon Website](../src/images/neon.png)

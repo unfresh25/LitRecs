@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: aa55459c-bb2e-46b0-a3a0-5ee5abebafeb
+      url: 'https://unfresh25.quarto.pub/litrecs'

@@ -6,6 +6,9 @@ toc-title: ""
 ``` {python}
 #| echo: false
 from itables import show
+
+def show_image(value):
+    return f'<img src="{value}" width=50></img>'
 ```
 
 In this section, we will discuss `recommendations` offered to users based on their searches or the book they input to gather information. Specifically, we will explore recommendations known as "you might also like this".
@@ -20,6 +23,7 @@ import psycopg2 as psy
 from sqlalchemy import create_engine, text
 
 import pandas as pd
+import re
 
 load_dotenv()
 
@@ -30,15 +34,15 @@ engine = create_engine(DATABASE_URL)
 
 It's important to note that `DATABASE_URL` is simply the connection link to our database on [Neon](https://neon.tech/).
 
-### Book Search
+For this section, we'll use the `sqlalchemy`, `psycopg2`, and `pandas` libraries to access the database, which in our case is PostgreSQL. If you are using a different type of database, you will need to adjust the libraries accordingly.
 
-We will use the `sqlalchemy`, `psycopg2`, and `pandas` libraries to access the database, which in our case is PostgreSQL. If you are using a different type of database, you will need to adjust the libraries accordingly.
-
-We'll start by creating a function to search for specific books:
+Let's start by creating a function to search for specific books:
 
 ``` {python}
 def search_book(search):
-    search = search.replace(" ", " & ")
+    search = re.sub(r'\s+', " ", search).replace(" ", " & ")
+    print(f'Results for: {search}')
+    print()
 
     query = text("""
         SELECT title, author, genres
@@ -54,12 +58,12 @@ def search_book(search):
 
 This function searches our database for user-entered keywords and returns the titles, authors, and genres of the books found with the requested characteristics.
 
-### Search by Title
+## Search by Title
 
 Suppose a user wants to search for the "Throne of Glass" series by author Sarah J. Maas. The results would be as follows:
 
 ``` {python}
-books = search_book('Throne of Glass')
+books = search_book('throne     of Glass')
 for book in books:
     print(f'Title: {book.title}')
     print(f'Author: {book.author}')
@@ -70,7 +74,7 @@ for book in books:
     print()
 ```
 
-### Search by Author
+## Search by Author
 
 If the user wants to search for all books by a specific author, such as Sarah J. Maas, the search would be conducted as follows:
 
@@ -86,7 +90,7 @@ for book in books:
     print()
 ```
 
-### Search by Keywords
+## Search by Keywords
 
 Finally, even if the user doesn't know the specific title or author, they can search for books using keywords like "fantasy young adult romance". The process to retrieve results would be similar:
 
@@ -101,3 +105,37 @@ for book in books:
         print(f'- {genre.capitalize()}')
     print()
 ```
+
+## Recommendations by search
+
+Now, as we mentioned initially, we will work on user recommendations based on their search. In other words, in addition to showing the user the books obtained from their search, the application will display a "you might like this" section with some books related to their search.
+
+To implement this, we will create the following function to perform queries on the database:
+
+``` {python}
+def rec_by_search(search):
+    search = re.sub(r'\s+', " ", search)
+
+    query = text("""
+        SELECT DISTINCT(title), author, first_publish_year AS year, cover_m AS cover,
+        similarity(con_info::text, (SELECT con_info::text FROM books WHERE title = :title LIMIT 1)) AS similarity
+        FROM books
+        WHERE title != :title
+        ORDER BY similarity DESC
+        LIMIT 5;
+    """)
+
+    with engine.connect() as conn:
+        result = conn.execute(query, {'title': search})
+        return result.fetchall()
+```
+
+Let's test the function using the following book as an example: "The Assassin’s Blade":
+
+``` {python}
+books = rec_by_search('The Assassin’s Blade')
+books = pd.DataFrame(books)
+show(books.style.format({'cover': show_image}), ordering=False, searching=False)
+```
+
+Note that this function will be used when a user clicks to view detailed information about a book obtained from their search.

@@ -106,10 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
-
-
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -257,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>os</li>
 </ol>
 <p>Let’s load these libraries:</p>
-<div id="7a98e747" class="cell" data-execution_count="2">
+<div id="2990382f" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> psycopg2 <span class="im">as</span> psy</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> psycopg2 <span class="im">import</span> Error</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -270,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fetching-book-information" class="level1">
 <h1>Fetching Book Information</h1>
 <p>Here’s how to fetch information about a book using a function that retrieves books based on user requests:</p>
-<div id="f3db5162" class="cell" data-execution_count="3">
+<div id="41e61561" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> search_book_by_title(title):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">"https://openlibrary.org/search.json"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {</span>
@@ -286,12 +283,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For example, we will search for <em>Animal Farm</em> by <em>George Orwell</em>:</p>
-<div id="a1183c48" class="cell" data-execution_count="4">
+<div id="c6feb8dd" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>title <span class="op">=</span> <span class="st">"Animal Farm"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>books <span class="op">=</span> search_book_by_title(title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This code calls our search function and retrieves books related to the requested title. The response data is extensive, so let’s extract some key information:</p>
-<div id="c94f3937" class="cell" data-execution_count="5">
+<div id="556d1aee" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> []</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
@@ -307,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> pd.DataFrame(books_df, columns<span class="op">=</span>[<span class="st">'Title'</span>, <span class="st">'Author'</span>, <span class="st">'Year'</span>, <span class="st">'ISBN'</span>])</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>show(books_df, ordering <span class="op">=</span> <span class="va">False</span>, searching <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<table id="itables_d492bb07_632a_4169_a2a5_e33461f0248f" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_e9cb4028_edb5_4ac5_8d60_68f25e105f9a" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -388,9 +385,9 @@ Loading ITables v2.1.1 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.10/dt_bundle.js';
 
-    document.querySelectorAll("#itables_d492bb07_632a_4169_a2a5_e33461f0248f:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_e9cb4028_edb5_4ac5_8d60_68f25e105f9a:not(.dataTable)").forEach(table => {
         // Define the table data
-        const data = [["Animal Farm", "George Orwell", 1945, "9780812415070"], ["Animal Farm / Nineteen Eighty-Four", "George Orwell", 1978, "0151010269"], ["Brian Wildsmith's Farm Animals", "Brian Wildsmith", 2001, "9781595721709"], ["Animal Farm with Connections", "George Orwell", 1999, "0030554349"], ["Animal Farm", "George Orwell", 2020, "9798457213630"], ["Animal Farm", "George Orwell", 1964, "9798365455214"], ["Animal Farm", "George Orwell", 2018, "9798675985357"], ["Farm Animal Adult Coloring Book", "Hasan coloring book", 2020, "9798586878823"], ["Animal Farm", "George Orwell", 2017, "9781091814158"], ["Anatomy and physiology of farm animals", "R. D. Frandson", 1965, "1119239710"], ["Scientific farm animal production", "Robert E. Taylor", 1988, "0134565916"], ["Reproduction in farm animals", "E. S. E. Hafez", 1987, "9780812110135"], ["Farm Animal Adult Coloring Book", "Hasan press", 2021, "9798590326181"], ["Animal Farm", "George Orwell", 2019, "9798676043452"], ["Animal Farm", "George ORWELL", 2020, "9798673539545"], ["Animal Farm", "George Orwell", 1956, "9798448462955"], ["Farm animals", "Lucy Cousins", 1990, "9780763606107"], ["Our animal friends at Maple Hill Farm", "Alice Provensen", 1974, "9780689844997"], ["Animal Farm", "Odyr", 2019, "0358410770"], ["Reproduction in farm animals", "B. Hafez", 2000, "1119265304"]];
+        const data = [["Animal Farm", "George Orwell", 1945, "9780812415070"], ["Animal Farm / Nineteen Eighty-Four", "George Orwell", 1978, "0151010269"], ["Brian Wildsmith's Farm Animals", "Brian Wildsmith", 2001, "9781595721709"], ["Animal Farm with Connections", "George Orwell", 1999, "0030554349"], ["Animal Farm", "George Orwell", 2020, "9798457213630"], ["Animal Farm", "George Orwell", 1964, "9798365455214"], ["Animal Farm", "George Orwell", 2018, "9798675985357"], ["Farm Animal Adult Coloring Book", "Hasan coloring book", 2020, "9798586878823"], ["Animal Farm", "George Orwell", 2017, "9781091814158"], ["Anatomy and physiology of farm animals", "R. D. Frandson", 1965, "1119239710"], ["Scientific farm animal production", "Robert E. Taylor", 1988, "0134565916"], ["Reproduction in farm animals", "E. S. E. Hafez", 1987, "9780812110135"], ["Farm Animal Adult Coloring Book", "Hasan press", 2021, "9798590326181"], ["Animal Farm", "George Orwell", 2019, "9798676043452"], ["Animal Farm", "George Orwell", 1956, "0451516796"], ["Animal Farm", "George ORWELL", 2020, "9798673539545"], ["Farm animals", "Lucy Cousins", 1990, "9780763606107"], ["Our animal friends at Maple Hill Farm", "Alice Provensen", 1974, "9780689844997"], ["Animal Farm", "Odyr", 2019, "0358410770"], ["Reproduction in farm animals", "B. Hafez", 2000, "1119265304"]];
 
         // Define the dt_args
         let dt_args = {"ordering": false, "searching": false, "layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": []};
@@ -409,7 +406,7 @@ Loading ITables v2.1.1 from the internet...
 <h1>Looking for important data</h1>
 <p>In the previous section, we obtained relevant data about the books. However, to get other necessary information, we need to use another endpoint that takes the book edition ID as a parameter. This means first performing a search with the previous endpoint and then using the new endpoint located at <code>https://openlibrary.org/works/{key}.json</code>. An example of the results obtained through this endpoint can be seen <a href="https://openlibrary.org/works/OL1168007W.json">here</a>.</p>
 <p>To obtain this data, we will first use the initial endpoint to extract the edition codes and then use the second endpoint as follows:</p>
-<div id="0ec0180a" class="cell" data-execution_count="6">
+<div id="263f3f92" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>book_keys <span class="op">=</span> []</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> book <span class="kw">in</span> books:</span>
@@ -426,7 +423,7 @@ Loading ITables v2.1.1 from the internet...
 </div>
 </div>
 <p>Now that we have the edition codes, we can define our function to call the next endpoint as follows:</p>
-<div id="8eb7b27a" class="cell" data-execution_count="7">
+<div id="cfb42ea6" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> search_book_by_ed_key(key):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="ss">f"https://openlibrary.org</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">.json"</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> requests.get(url)</span>
@@ -439,7 +436,7 @@ Loading ITables v2.1.1 from the internet...
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We call the function and extract the relevant data, keeping in mind that <code>key</code> corresponds to the edition codes identified earlier:</p>
-<div id="1de98c79" class="cell" data-execution_count="8">
+<div id="4f70dd47" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> []</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key <span class="kw">in</span> book_keys:</span>
@@ -455,7 +452,7 @@ Loading ITables v2.1.1 from the internet...
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> pd.DataFrame(books_df, columns<span class="op">=</span>[<span class="st">'Title'</span>, <span class="st">'Subjects'</span>, <span class="st">'Description'</span>])</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>show(books_df, ordering<span class="op">=</span><span class="va">False</span>, searching<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<table id="itables_4c5a8af3_dc88_4335_96cd_59ee210a70e1" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_79304581_dd6b_4520_873e_8725e6cf4be5" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -535,9 +532,9 @@ Loading ITables v2.1.1 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.10/dt_bundle.js';
 
-    document.querySelectorAll("#itables_4c5a8af3_dc88_4335_96cd_59ee210a70e1:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_79304581_dd6b_4520_873e_8725e6cf4be5:not(.dataTable)").forEach(table => {
         // Define the table data
-        const data = [["Animal Farm", "British and irish fiction (fictional works by one author), political satire, classic, animal drama", "Animal Farm is a brilliant political satire and a powerful and affecting story of revolutions and idealism, power and corruption. 'All animals are equal. But some animals are more equal than others.' Mr Jones of Manor Farm is so lazy and drunken that one day he forgets to feed his livestock. The ensuing rebellion under the leadership of the pigs Napoleon and Snowball leads to the animals taking over the farm. Vowing to eliminate the terrible inequities of the farmyard, the renamed Animal Farm is organised to benefit all who walk on four legs. But as time passes, the ideals of the rebellion are corrupted, then forgotten. And something new and unexpected emerges.."], ["Animal Farm / Nineteen Eighty-Four", "domestic animals, totalitarianism, Satire, Fiction", "Contains:\\r\\n\\r\\n - Animal Farm\\r\\n - [Nineteen Eighty-Four](https://openlibrary.org/works/OL1168091W/Nineteen_Eighty-Four)"], ["Brian Wildsmith's Farm Animals", "Animal sounds, Spanish language materials, Domestic animals, Animales dom\u00e9sticos", "Animals on the farm."], ["Animal Farm with Connections", "Reading Level-Grade 5, Reading Level-Grade 4, Reading Level-Grade 7, Reading Level-Grade 6", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "", "No description available"], ["Farm Animal Adult Coloring Book", "", "No description available"], ["Animal Farm", "", "No description available"], ["Anatomy and physiology of farm animals", "Domestic animals, Physiology, Veterinary anatomy, Veterinary physiology", "No description available"], ["Scientific farm animal production", "Livestock", "No description available"], ["Reproduction in farm animals", "Livestock, Reproducao Animal, Domestic Animals, Physiologie v\u00e9t\u00e9rinaire", "No description available"], ["Farm Animal Adult Coloring Book", "", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "British and irish fiction (fictional works by one author)", "No description available"], ["Farm animals", "Domestic animals, Juvenile literature, Pictorial works, Juvenile fiction", "{'type': '/type/text', 'value': 'This board book presents labeled pictures of a duck, hen, pig, and seven other farm animals.'}"], ["Our animal friends at Maple Hill Farm", "Domestic animals, Farm life, Juvenile literature, Livestock", "{'type': '/type/text', 'value': 'Describes animals on the authors' own farm in New York: dogs, horses, pigs, geese, chickens, cows, goats, sheep, cats, and more!'}"], ["Animal Farm", "Literature, Comics & graphic novels, literary, Comics & graphic novels, adaptations, Totalitarianism", "No description available"], ["Reproduction in farm animals", "Veterinary physiology, Livestock, Physiology, Reproduction", "No description available"]];
+        const data = [["Animal Farm", "British and irish fiction (fictional works by one author), political satire, classic, animal drama", "Animal Farm is a brilliant political satire and a powerful and affecting story of revolutions and idealism, power and corruption. 'All animals are equal. But some animals are more equal than others.' Mr Jones of Manor Farm is so lazy and drunken that one day he forgets to feed his livestock. The ensuing rebellion under the leadership of the pigs Napoleon and Snowball leads to the animals taking over the farm. Vowing to eliminate the terrible inequities of the farmyard, the renamed Animal Farm is organised to benefit all who walk on four legs. But as time passes, the ideals of the rebellion are corrupted, then forgotten. And something new and unexpected emerges.."], ["Animal Farm / Nineteen Eighty-Four", "domestic animals, totalitarianism, Satire, Fiction", "Contains:\\r\\n\\r\\n - Animal Farm\\r\\n - [Nineteen Eighty-Four](https://openlibrary.org/works/OL1168091W/Nineteen_Eighty-Four)"], ["Brian Wildsmith's Farm Animals", "Animal sounds, Spanish language materials, Domestic animals, Animales dom\u00e9sticos", "Animals on the farm."], ["Animal Farm with Connections", "Reading Level-Grade 5, Reading Level-Grade 4, Reading Level-Grade 7, Reading Level-Grade 6", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "", "No description available"], ["Farm Animal Adult Coloring Book", "", "No description available"], ["Animal Farm", "", "No description available"], ["Anatomy and physiology of farm animals", "Domestic animals, Physiology, Veterinary anatomy, Veterinary physiology", "No description available"], ["Scientific farm animal production", "Livestock", "No description available"], ["Reproduction in farm animals", "Livestock, Reproducao Animal, Domestic Animals, Physiologie v\u00e9t\u00e9rinaire", "No description available"], ["Farm Animal Adult Coloring Book", "", "No description available"], ["Animal Farm", "", "No description available"], ["Animal Farm", "British and irish fiction (fictional works by one author)", "No description available"], ["Animal Farm", "", "No description available"], ["Farm animals", "Domestic animals, Juvenile literature, Pictorial works, Juvenile fiction", "{'type': '/type/text', 'value': 'This board book presents labeled pictures of a duck, hen, pig, and seven other farm animals.'}"], ["Our animal friends at Maple Hill Farm", "Domestic animals, Farm life, Juvenile literature, Livestock", "{'type': '/type/text', 'value': 'Describes animals on the authors' own farm in New York: dogs, horses, pigs, geese, chickens, cows, goats, sheep, cats, and more!'}"], ["Animal Farm", "Literature, Comics & graphic novels, literary, Comics & graphic novels, adaptations, Totalitarianism", "No description available"], ["Reproduction in farm animals", "Veterinary physiology, Livestock, Physiology, Reproduction", "No description available"]];
 
         // Define the dt_args
         let dt_args = {"ordering": false, "searching": false, "layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": []};
@@ -578,7 +575,7 @@ Note
 <p>To obtain the book covers, we will use the <code>cover_i</code>, which corresponds to the ID of the covers associated with each registered book. For more information, you can consult the documentation <a href="https://openlibrary.org/dev/docs/api/covers">here</a>.</p>
 </div>
 </div>
-<div id="e472036d" class="cell" data-execution_count="9">
+<div id="5225066a" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> OpenLibraryClient:</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.base_url <span class="op">=</span> <span class="st">"https://openlibrary.org"</span></span>
@@ -647,7 +644,7 @@ Note
 <span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>books_df <span class="op">=</span> pd.DataFrame(books)</span>
 <span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>show(books_df, ordering<span class="op">=</span><span class="va">False</span>, searching<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<table id="itables_12b84a62_aa70_4d9f_9806_206fe6d86b6f" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_a428e1fa_94ea_4d9d_b9d9_e32486bfecd7" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       
@@ -733,7 +730,7 @@ Loading ITables v2.1.1 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.10/dt_bundle.js';
 
-    document.querySelectorAll("#itables_12b84a62_aa70_4d9f_9806_206fe6d86b6f:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_a428e1fa_94ea_4d9d_b9d9_e32486bfecd7:not(.dataTable)").forEach(table => {
         // Define the table data
         const data = [["/works/OL16607146W", "Throne of Glass", "Sarah J. Maas", "{'type': '/type/text', 'value': 'Lethal. Loyal. Legendary.\r\n\r\nEnter the world of Throne of Glass with the first book in the #1 bestselling series by Sarah J. Maas.\r\n\r\nIn a land without magic, an assassin is summoned to the castle. She has no love for the vicious king who rules from his throne of glass, but she has not come to kill him. She has come to win her freedom. If she defeats twenty-three murderers, thieves, and warriors in a competition, she will be released from prison to serve as the King\u2019s Champion.\r\n\r\nHer name is Celaena Sardothien.\r\n\r\nThe Crown Prince will provoke her. The Captain of the Guard will protect her. And a princess from a faraway country will befriend her. But something rotten dwells in the castle, and it\u2019s there to kill. When her competitors start dying mysteriously, one by one, Celaena\u2019s fight for freedom becomes a fight for survival\u2014and a desperate quest to root out the evil before it destroys her world.'}", 2012, "https://covers.openlibrary.org/b/id/13312488-M.jpg", "https://covers.openlibrary.org/b/id/13312488-L.jpg", 4.22, 60], ["/works/OL19914740W", "The Assassin's Blade / Throne of Glass / Crown of Midnight / Heir of Fire / Queen of Shadows / Empire of Storms / Tower of Dawn / Kingdom of Ash", "Sarah J. Maas", "No description available", 2018, "https://covers.openlibrary.org/b/id/8738841-M.jpg", "https://covers.openlibrary.org/b/id/8738841-L.jpg", 5.0, 3], ["/works/OL27308145W", "Throne Of Glass Series Collection 5 Books Set By Sarah J. Maas", "Sarah J. Maas", "No description available", 2019, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL21126759W", "Throne of Glass Coloring Book", "Sarah J. Maas", "{'type': '/type/text', 'value': 'For the first time, fans of Sarah J. Maas's sweeping New York Times bestselling Throne of Glass saga can experience the vivid imagery of her expansive world. Celaena battling the ridderak in the catacombs, Chaol in the gardens of the glass castle, Manon riding her wyvern through the Crossing, and many other favorite moments, characters, and objects come to life as readers explore the vibrantly detailed realm of Throne of Glass. Stunning original black-and-white drawings will bring fans deeper into the series than ever before-making this a must-have companion to Sarah J. Maas's beloved books.'}", 2016, "https://covers.openlibrary.org/b/id/14350913-M.jpg", "https://covers.openlibrary.org/b/id/14350913-L.jpg", 0.0, 0], ["/works/OL21149879W", "World of Throne of Glass", "Sarah J. Maas", "No description available", 2018, "https://covers.openlibrary.org/b/id/14350941-M.jpg", "https://covers.openlibrary.org/b/id/14350941-L.jpg", 0.0, 0], ["/works/OL31144100W", "Throne of Glass Coloring Book", "Shenita Shenita Pressley", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL20354288W", "Throne of Glass 1-3 set", "Sarah J. Maas", "No description available", 2014, "https://covers.openlibrary.org/b/id/9020498-M.jpg", "https://covers.openlibrary.org/b/id/9020498-L.jpg", 0.0, 0], ["/works/OL38039996W", "Throne of Glass Hardcover Box Set (Throne of Glass)", "Sarah J. Maas", "No description available", 2023, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL27933755W", "Throne of Glass Cookbook", "Maekawa Sukeyasu", "No description available", 2021, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL29176025W", "Throne of Gl\u00e0ss Coloring Book", "Christinia Christinia Duran", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL27921923W", "Throne of Gl\u00e0ss Coloring Book", "Elon FZ", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL37870842W", "Throne of Glass Box Set", "Sarah J. Maas", "No description available", 2024, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL34456190W", "Throne of Gl\u00e0ss Coloring Book", "Throne Of Gl\u00e0ss COLORING", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL31131086W", "Throne of Glass Coloring Book", "Jenelle Jenelle Knox", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL29190190W", "Throne of Gl\u00e0ss Coloring Book", "&#504;ba VDF", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL28070779W", "Throne of Gl\u00e0ss Coloring Book", "Nadya hy", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL27948494W", "Throne of Gl\u00e0ss Coloring Book", "Nadya gftt", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL34379224W", "Throne of Gl\u00e0ss Coloring Book", "&#504;ba QCQS", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL34201166W", "Throne of Gl\u00e0ss Coloring Book", "&#504;ba QSDZ", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0], ["/works/OL34437015W", "Throne of Gl\u00e0ss Coloring Book", "&#504;ba coloring book", "No description available", 2022, "https://covers.openlibrary.org/b/id/-M.jpg", "https://covers.openlibrary.org/b/id/-L.jpg", 0.0, 0]];
 
@@ -836,7 +833,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/unfresh25\.quarto\.pub\/litrecs");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
